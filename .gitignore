@@ -1,0 +1,10 @@
+ninja.model/bin
+ninja.model/obj
+
+ninja.test/bin
+ninja.test/obj
+
+ninja/bin
+ninja/obj
+
+packages
