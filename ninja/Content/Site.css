@@ -1,4 +1,6 @@
-﻿body {
+﻿
+@import url(https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,900);
+body {
     padding-top: 77px;
     padding-bottom: 20px;
 }
@@ -28,4 +30,20 @@ textarea {
     padding-left: 40%;
     width: 55%;
     height:90px;
+}
+footer {
+    padding-top:20%;
+    left: -50px;
+    right: 0;
+}
+ 
+ 
+h1 {
+    font-size: 3em;
+    text-align: center;
+}
+
+.embiggen {
+    font-size: 4em;
+    text-shadow: 0 0 40px #ffbab3;
 }
