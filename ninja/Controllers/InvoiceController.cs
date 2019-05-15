@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ninja.model.Entity;
+using ninja.model.Manager;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,18 +10,16 @@ namespace ninja.Controllers
 {
     public class InvoiceController : Controller
     {
+
+        private InvoiceManager _InvoiceContext = new InvoiceManager();
         // GET: Invoice
         public ActionResult Index()
         {
-            return View();
+            IList<Invoice> invoiceList = _InvoiceContext.GetAll();
+            return View(invoiceList);
         }
 
-        // GET: Invoice/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+    
         // GET: Invoice/Create
         public ActionResult New()
         {
@@ -28,13 +28,17 @@ namespace ninja.Controllers
 
         // POST: Invoice/Create
         [HttpPost]
-        public ActionResult New(FormCollection collection)
+        public ActionResult New(Invoice invoice)
         {
             try
             {
-                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                if (this.ModelState.IsValid)
+                {
+                    _InvoiceContext.Insert(invoice);
+                    return RedirectToAction("Index");
+                }
+                return View(invoice);
             }
             catch
             {
@@ -43,24 +47,27 @@ namespace ninja.Controllers
         }
 
         // GET: Invoice/Edit/5
-        public ActionResult Update(int id)
+        public ActionResult Update(int? id)
         {
-            return View();
+            if (id == null)
+                  return View("Error");
+            Invoice invoiceToModity = _InvoiceContext.GetById((long)id);
+            return View(invoiceToModity);
         }
 
         // POST: Invoice/Edit/5
         [HttpPost]
-        public ActionResult Update(int id, FormCollection collection)
+        public ActionResult Update(Invoice invoice)
         {
             try
             {
-                // TODO: Add update logic here
-
+                _InvoiceContext.Delete(invoice.Id);
+                _InvoiceContext.Insert(invoice);
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
 
@@ -72,11 +79,11 @@ namespace ninja.Controllers
 
         // POST: Invoice/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(long id)
         {
             try
             {
-                // TODO: Add delete logic here
+                _InvoiceContext.Delete(id);
 
                 return RedirectToAction("Index");
             }
@@ -85,5 +92,13 @@ namespace ninja.Controllers
                 return View();
             }
         }
+        
+        // GET: Invoice/Details
+        public ActionResult Details(long id)
+        {
+            Invoice invoice = _InvoiceContext.GetById(id);
+            return View(invoice.GetDetail());
+        }
+
     }
 }
