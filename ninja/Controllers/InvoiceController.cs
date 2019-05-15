@@ -79,11 +79,13 @@ namespace ninja.Controllers
 
         // POST: Invoice/Delete/5
         [HttpPost]
-        public ActionResult Delete(long id)
+        public ActionResult Delete(long? id)
         {
             try
             {
-                _InvoiceContext.Delete(id);
+                if(id==null)
+                    return View("Error");
+                _InvoiceContext.Delete((long) id);
 
                 return RedirectToAction("Index");
             }
@@ -94,7 +96,7 @@ namespace ninja.Controllers
         }
         
         // GET: Invoice/Details
-        public ActionResult Details(long id)
+        public ActionResult Detail(long id)
         {
             Invoice invoice = _InvoiceContext.GetById(id);
             return View(invoice.GetDetail());
