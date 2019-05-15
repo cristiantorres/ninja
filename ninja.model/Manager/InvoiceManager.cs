@@ -56,11 +56,16 @@ namespace ninja.model.Manager {
               por los recibidos por parámetro
              */
 
-            #region Escribir el código dentro de este bloque
+            #region codigo implementado
 
-            throw new NotImplementedException();
+            Invoice invoiceToModify = this.GetById(id);
+            invoiceToModify.DeleteDetails();
+            foreach (InvoiceDetail invoicedetail in detail)
+            {
+                invoiceToModify.AddDetail(invoicedetail);
+            }
 
-            #endregion Escribir el código dentro de este bloque
+            #endregion codigo implementado
 
         }
 

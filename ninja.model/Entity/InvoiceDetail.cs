@@ -19,7 +19,7 @@ namespace ninja.model.Entity {
         public double Amount { get; set; }
         public double UnitPrice { get; set; }
         public double TotalPrice { get { return this.Amount * this.UnitPrice; } }
-        public double TotalPriceWithTaxes { get { return this.Amount * this.UnitPrice; } }
+        public double TotalPriceWithTaxes { get { return this.Amount * this.UnitPrice * this.Taxes; } }
 
     }
 
