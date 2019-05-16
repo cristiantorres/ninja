@@ -88,7 +88,7 @@ namespace ninja.Controllers
             {
                 if(invoice == null)
                     return View("Error");
-                _InvoiceContext.Delete(invoice.id);
+                _InvoiceContext.Delete(invoice.Id);
                 return RedirectToAction("Index");
             }
             catch
@@ -100,11 +100,9 @@ namespace ninja.Controllers
         // GET: Invoice/Details
         public ActionResult Detail(long id)
         {
-            ViewBag.Results = "";
+             
             Invoice invoice = _InvoiceContext.GetById(id);
-            //if(invoice.GetDetail().Count == 0) {
-            //    ViewBag.Results = "No results";
-            //}
+  
             return View(invoice.GetDetail());
         }
 
