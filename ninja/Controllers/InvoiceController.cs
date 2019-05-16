@@ -72,21 +72,23 @@ namespace ninja.Controllers
         }
 
         // GET: Invoice/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(long? id)
         {
-            return View();
+            if (id == null)
+                return View("Error");
+            Invoice invoiceToDelete = _InvoiceContext.GetById((long)id);
+            return View(invoiceToDelete);
         }
 
         // POST: Invoice/Delete/5
         [HttpPost]
-        public ActionResult Delete(long? id)
+        public ActionResult Delete(Invoice invoice)
         {
             try
             {
-                if(id==null)
+                if(invoice == null)
                     return View("Error");
-                _InvoiceContext.Delete((long) id);
-
+                _InvoiceContext.Delete(invoice.id);
                 return RedirectToAction("Index");
             }
             catch
