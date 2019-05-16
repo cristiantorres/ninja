@@ -1,7 +1,7 @@
 ﻿
 @import url(https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,900);
 body {
-    padding-top: 77px;
+    padding-top: 180px;
     padding-bottom: 20px;
 }
 
@@ -31,10 +31,23 @@ textarea {
     width: 55%;
     height:90px;
 }
+html {
+    min-height: 100%;
+    position: relative;
+}
+
+body {
+    margin: 0;
+    margin-bottom: 40px;
+}
+
 footer {
-    padding-top:20%;
-    left: -50px;
-    right: 0;
+    background-color: aliceblue;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    color: black;
 }
  
  
@@ -46,4 +59,8 @@ h1 {
 .embiggen {
     font-size: 4em;
     text-shadow: 0 0 40px #ffbab3;
+}
+
+.table>tr{
+    background-color:aquamarine;
 }

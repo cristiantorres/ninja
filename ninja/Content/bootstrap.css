@@ -1414,21 +1414,24 @@ th {
 }
 
 .table {
-  width: 100%;
-  margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 10px 10px 10px 10px;
+     
 }
 
-.table thead > tr > th,
-.table tbody > tr > th,
-.table tfoot > tr > th,
-.table thead > tr > td,
-.table tbody > tr > td,
-.table tfoot > tr > td {
-  padding: 8px;
-  line-height: 1.428571429;
-  vertical-align: top;
-  border-top: 1px solid #dddddd;
-}
+    .table thead > tr > th,
+    .table tbody > tr > th,
+    .table tfoot > tr > th,
+    .table thead > tr > td,
+    .table tbody > tr > td,
+    .table tfoot > tr > td {
+        padding: 8px;
+        line-height: 1.428571429;
+        vertical-align: top;
+        border-top: 1px solid #96bdc2;
+        background-color: #c7cdd3
+    }
 
 .table thead > tr > th {
   vertical-align: bottom;
