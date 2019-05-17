@@ -38,6 +38,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.UnitPrice)
         </td>
+
+        <td>
+            @Html.ActionLink("Update", "UpdateItem", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "DeleteItem", new { id = item.Id })
+        </td>
  
     </tr>
      

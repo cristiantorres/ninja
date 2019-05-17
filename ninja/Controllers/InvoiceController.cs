@@ -1,5 +1,6 @@
 ﻿using ninja.model.Entity;
 using ninja.model.Manager;
+using ninja.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,14 @@ namespace ninja.Controllers
         public ActionResult Index()
         {
             IList<Invoice> invoiceList = _InvoiceContext.GetAll();
+            List<InvoiceViewModels> invoiceVM = new List<InvoiceViewModels>();
+             foreach (var inv in invoiceList)
+            {
+                InvoiceViewModels objVM = new InvoiceViewModels();
+                objVM.Id = inv.Id;
+                objVM.Type = inv.Type;
+
+            }
             return View(invoiceList);
         }
 
@@ -28,14 +37,17 @@ namespace ninja.Controllers
 
         // POST: Invoice/Create
         [HttpPost]
-        public ActionResult New(Invoice invoice)
+        public ActionResult New(InvoiceViewModels invoice)
         {
             try
             {
 
                 if (this.ModelState.IsValid)
                 {
-                    _InvoiceContext.Insert(invoice);
+                    Invoice _invoiceToAdd = new Invoice();
+                    _invoiceToAdd.Id = invoice.Id;
+                    _invoiceToAdd.Type = invoice.Type;
+                    _InvoiceContext.Insert(_invoiceToAdd);
                     return RedirectToAction("Index");
                 }
                 return View(invoice);
@@ -57,12 +69,14 @@ namespace ninja.Controllers
 
         // POST: Invoice/Edit/5
         [HttpPost]
-        public ActionResult Update(Invoice invoice)
+        public ActionResult Update(InvoiceViewModels invoice)
         {
             try
             {
-                _InvoiceContext.Delete(invoice.Id);
-                _InvoiceContext.Insert(invoice);
+
+                //Verificar la modificacion de una invoice
+               // _InvoiceContext.Delete(invoice.Id);
+               // _InvoiceContext.Insert(invoice);
                 return RedirectToAction("Index");
             }
             catch
@@ -82,7 +96,7 @@ namespace ninja.Controllers
 
         // POST: Invoice/Delete/5
         [HttpPost]
-        public ActionResult Delete(Invoice invoice)
+        public ActionResult Delete(InvoiceViewModels invoice)
         {
             try
             {
