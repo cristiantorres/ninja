@@ -17,15 +17,16 @@ namespace ninja.Controllers
         public ActionResult Index()
         {
             IList<Invoice> invoiceList = _InvoiceContext.GetAll();
-            List<InvoiceViewModels> invoiceVM = new List<InvoiceViewModels>();
+            List<InvoiceViewModels> invoiceVMList = new List<InvoiceViewModels>();
              foreach (var inv in invoiceList)
             {
                 InvoiceViewModels objVM = new InvoiceViewModels();
                 objVM.Id = inv.Id;
                 objVM.Type = inv.Type;
+                invoiceVMList.Add(objVM);
 
             }
-            return View(invoiceList);
+            return View(invoiceVMList);
         }
 
     
@@ -41,7 +42,6 @@ namespace ninja.Controllers
         {
             try
             {
-
                 if (this.ModelState.IsValid)
                 {
                     Invoice _invoiceToAdd = new Invoice();
@@ -64,7 +64,11 @@ namespace ninja.Controllers
             if (id == null)
                   return View("Error");
             Invoice invoiceToModity = _InvoiceContext.GetById((long)id);
-            return View(invoiceToModity);
+            InvoiceViewModels invoiceVM = new InvoiceViewModels();
+            invoiceVM.Id = invoiceToModity.Id;
+            invoiceVM.Type = invoiceToModity.Type; 
+
+            return View(invoiceVM);
         }
 
         // POST: Invoice/Edit/5
@@ -75,7 +79,7 @@ namespace ninja.Controllers
             {
 
                 //Verificar la modificacion de una invoice
-               // _InvoiceContext.Delete(invoice.Id);
+                _InvoiceContext.Update(invoice.Id);
                // _InvoiceContext.Insert(invoice);
                 return RedirectToAction("Index");
             }
@@ -91,7 +95,11 @@ namespace ninja.Controllers
             if (id == null)
                 return View("Error");
             Invoice invoiceToDelete = _InvoiceContext.GetById((long)id);
-            return View(invoiceToDelete);
+            InvoiceViewModels invoiceVM = new InvoiceViewModels();
+            invoiceVM.Type= invoiceToDelete.Type;
+            invoiceVM.Id = invoiceToDelete.Id;
+
+            return View(invoiceVM);
         }
 
         // POST: Invoice/Delete/5

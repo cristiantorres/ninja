@@ -23,7 +23,7 @@ namespace ninja.Models.validators
                 types.Add("B");
                 types.Add("C");
 
-                string typeInput = value.ToString();
+                string typeInput = value.ToString().ToUpper();
 
                 if (types.Contains(typeInput))
                 {
