@@ -37,12 +37,20 @@ namespace ninja.model.Manager {
         }
 
         public void Delete(long id) {
+            Invoice invoice = this.GetById(id);
+            if (invoice != null)
+                this._mock.DeleteDetail(id);
+                this._mock.Delete(invoice);
+            
+        }
+        public void Update(long id)
+        {
 
             Invoice invoice = this.GetById(id);
-            this._mock.Delete(invoice);
+            
+            this._mock.Update(invoice);
 
         }
-
         public Boolean Exists(long id) {
 
             return this._mock.Exists(id);

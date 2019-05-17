@@ -75,6 +75,13 @@ namespace ninja.model.Mock {
 
         }
 
+        public void Update(Invoice invoice)
+        {
+            Invoice invoiceFind = this.GetById(invoice.Id);
+            invoiceFind.Type = invoice.Type;
+ 
+        }
+
         public void Delete(Invoice invoice) {
 
             this._db.Remove(invoice);
