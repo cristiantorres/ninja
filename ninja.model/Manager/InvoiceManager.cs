@@ -51,6 +51,12 @@ namespace ninja.model.Manager {
             this._mock.Update(invoice);
 
         }
+        public void Update(Invoice invoice)
+        {
+
+            this._mock.Update(invoice);
+
+        }
         public Boolean Exists(long id) {
 
             return this._mock.Exists(id);
