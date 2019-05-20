@@ -5,7 +5,9 @@
 }
 
 <h2>Detail</h2>
-
+<p>
+    @Html.ActionLink("New", "NewItem", null, new { @class = "btn btn-info" })
+</p>
 
 <table class="table">
     <tr>
@@ -40,8 +42,8 @@
         </td>
 
         <td>
-            @Html.ActionLink("Update", "UpdateItem", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "DeleteItem", new { id = item.Id })
+            @Html.ActionLink("Update", "UpdateItem", new { id = item.Id }, new { @class = "btn btn-success" }) |
+            @Html.ActionLink("Delete", "DeleteItem", new { id = item.Id }, new { @class = "btn btn-danger" })
         </td>
  
     </tr>
