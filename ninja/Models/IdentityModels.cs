@@ -29,5 +29,7 @@ namespace ninja.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<ninja.Models.InvoiceDetailViewModels> InvoiceDetailViewModels { get; set; }
     }
 }

@@ -64,7 +64,7 @@ namespace ninja.model.Mock {
 
 
             Invoice invoice5 = new Invoice() {
-                Id = 1006, Type = Invoice.Types.A.ToString()
+                Id = 1008, Type = Invoice.Types.A.ToString()
             };
 
             invoice5.AddDetail(new InvoiceDetail() { Id = 1001, InvoiceId = 5, Amount = 22, Description = "Venta varias", UnitPrice = 98.1 });

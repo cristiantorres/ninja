@@ -83,6 +83,23 @@ namespace ninja.model.Manager {
 
         }
 
+
+        /*Bora un detail especifico*/
+        public void deleteDetail(long idInvoice, long idDetail)
+        {
+            Invoice invoice = this.GetById(idInvoice);
+           // List<InvoiceDetail> details = invoice.GetDetail().ToList();
+
+            invoice.GetDetail().ToList().RemoveAll((x) => x.Id == idDetail);
+            //foreach (var item in details)
+            //{
+            //    if (item.Id==idDetail)
+            //    {
+            //        details.Remove(item);
+            //        break;
+            //    }
+            //}
+        }
     }
 
 }
