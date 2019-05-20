@@ -18,7 +18,7 @@ namespace ninja.Controllers
         {
             IList<Invoice> invoiceList = _InvoiceContext.GetAll();
             List<InvoiceViewModels> invoiceVMList = new List<InvoiceViewModels>();
-             foreach (var inv in invoiceList)
+            foreach (var inv in invoiceList)
             {
                 InvoiceViewModels objVM = new InvoiceViewModels();
                 objVM.Id = inv.Id;
@@ -29,14 +29,14 @@ namespace ninja.Controllers
             return View(invoiceVMList);
         }
 
-    
- 
+
+
         public ActionResult New()
         {
             return View();
         }
 
- 
+
         [HttpPost]
         public ActionResult New(InvoiceViewModels invoice)
         {
@@ -62,11 +62,11 @@ namespace ninja.Controllers
         public ActionResult Update(int? id)
         {
             if (id == null)
-                  return View("Error");
+                return View("Error");
             Invoice invoiceToModity = _InvoiceContext.GetById((long)id);
             InvoiceViewModels invoiceVM = new InvoiceViewModels();
             invoiceVM.Id = invoiceToModity.Id;
-            invoiceVM.Type = invoiceToModity.Type; 
+            invoiceVM.Type = invoiceToModity.Type;
 
             return View(invoiceVM);
         }
@@ -78,9 +78,9 @@ namespace ninja.Controllers
             try
             {
 
-                Invoice invoiceToModify = new Invoice{Id=invoice.Id,Type=invoice.Type };
+                Invoice invoiceToModify = new Invoice { Id = invoice.Id, Type = invoice.Type };
                 _InvoiceContext.Update(invoiceToModify);
-                
+
                 return RedirectToAction("Index");
             }
             catch
@@ -96,7 +96,7 @@ namespace ninja.Controllers
                 return View("Error");
             Invoice invoiceToDelete = _InvoiceContext.GetById((long)id);
             InvoiceViewModels invoiceVM = new InvoiceViewModels();
-            invoiceVM.Type= invoiceToDelete.Type;
+            invoiceVM.Type = invoiceToDelete.Type;
             invoiceVM.Id = invoiceToDelete.Id;
 
             return View(invoiceVM);
@@ -108,7 +108,7 @@ namespace ninja.Controllers
         {
             try
             {
-                if(invoice == null)
+                if (invoice == null)
                     return View("Error");
                 _InvoiceContext.Delete(invoice.Id);
                 return RedirectToAction("Index");
@@ -119,12 +119,13 @@ namespace ninja.Controllers
             }
         }
 
+
+        #region InvoiceDetails
         [HttpGet]
-      
         public ActionResult Detail(long id)
-        {         
+        {
             Invoice invoice = _InvoiceContext.GetById(id);
-             return View(invoice.GetDetail());
+            return View(invoice.GetDetail());
         }
 
 
@@ -132,7 +133,7 @@ namespace ninja.Controllers
         {
             if (idDetail == null)
                 return View("Error");
-            Invoice _invoice  = _InvoiceContext.GetById((long)idInvoice);
+            Invoice _invoice = _InvoiceContext.GetById((long)idInvoice);
             InvoiceDetailViewModels invoiceDetailVM = new InvoiceDetailViewModels();
             foreach (var item in _invoice.GetDetail())
             {
@@ -145,19 +146,19 @@ namespace ninja.Controllers
                     invoiceDetailVM.TotalPriceWithTaxes = item.TotalPriceWithTaxes;
                     invoiceDetailVM.UnitPrice = item.UnitPrice;
                 }
-            }  
+            }
             return View(invoiceDetailVM);
         }
 
         [HttpPost]
         public ActionResult DeleteItem(InvoiceDetailViewModels invoiceDetailVM)
         {
-             _InvoiceContext.deleteDetail(invoiceDetailVM.InvoiceId, invoiceDetailVM.Id);
+            _InvoiceContext.deleteDetail(invoiceDetailVM.InvoiceId, invoiceDetailVM.Id);
             return View();
         }
 
 
-         
+        [HttpGet]
         public ActionResult AddItem()
         {
             return View();
@@ -166,17 +167,33 @@ namespace ninja.Controllers
         [HttpPost]
         public ActionResult AddItem(InvoiceDetailViewModels invoiceDetailVM)
         {
-            List<InvoiceDetail> items = new List<InvoiceDetail>();
-            items.Add(new InvoiceDetail
+            try
             {
-                InvoiceId = invoiceDetailVM.InvoiceId,
-                Amount = invoiceDetailVM.Amount,
-                Description = invoiceDetailVM.Description,
-                UnitPrice = invoiceDetailVM.UnitPrice
-            });
+                if (this.ModelState.IsValid)
+                {
 
-            _InvoiceContext.UpdateDetail(invoiceDetailVM.InvoiceId, items);
-            return View();
+                    List<InvoiceDetail> items = new List<InvoiceDetail>();
+                    items.Add(new InvoiceDetail
+                    {
+                        InvoiceId = invoiceDetailVM.InvoiceId,
+                        Amount = invoiceDetailVM.Amount,
+                        Description = invoiceDetailVM.Description,
+                        UnitPrice = invoiceDetailVM.UnitPrice
+                    });
+                    _InvoiceContext.UpdateDetail(invoiceDetailVM.InvoiceId, items);
+                    return RedirectToAction("Index");
+
+                }
+                return View(invoiceDetailVM);
+            }
+            catch
+            {
+                return View();
+            }
+
+  
         }
+
+        #endregion InvoiceDetails
     }
 }
