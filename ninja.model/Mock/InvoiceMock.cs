@@ -64,7 +64,7 @@ namespace ninja.model.Mock {
 
 
             Invoice invoice5 = new Invoice() {
-                Id = 1003, Type = Invoice.Types.A.ToString()
+                Id = 1006, Type = Invoice.Types.A.ToString()
             };
 
             invoice5.AddDetail(new InvoiceDetail() { Id = 1001, InvoiceId = 5, Amount = 22, Description = "Venta varias", UnitPrice = 98.1 });
@@ -77,8 +77,10 @@ namespace ninja.model.Mock {
 
         public void Update(Invoice invoice)
         {
-            Invoice invoiceFind = this.GetById(invoice.Id);
-            invoiceFind.Type = invoice.Type;
+            Invoice invModif = this._db.FirstOrDefault(inv => inv.Id == invoice.Id);
+            invModif.Type = invoice.Type;
+             
+ 
  
         }
 
