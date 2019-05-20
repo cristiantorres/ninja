@@ -6,14 +6,13 @@
 
 <h2>Detail</h2>
 <p>
-    @Html.ActionLink("New", "AddItem", null, new { @class = "btn btn-info" })
+    @Html.ActionLink("New", "AddItem", new { id = ViewBag.Invoice }, new { @class = "btn btn-info" })
 </p>
-
+<h3></h3>@Html.DisplayNameFor(model => model.InvoiceId) -      @ViewBag.Invoice
+ <hr />
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.InvoiceId)
-        </th>
+ 
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
@@ -23,14 +22,18 @@
         <th>
             @Html.DisplayNameFor(model => model.UnitPrice)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPriceWithTaxes)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.InvoiceId)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
@@ -40,10 +43,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.UnitPrice)
         </td>
-
         <td>
-            @Html.ActionLink("Update", "UpdateItem", new { id = item.Id }, new { @class = "btn btn-success" }) |
-            @Html.ActionLink("Delete", "DeleteItem", new { id = item.Id }, new { @class = "btn btn-danger" })
+            @Html.DisplayFor(modelItem => item.TotalPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalPriceWithTaxes)
+        </td>
+        <td>
+            @Html.ActionLink("Update", "UpdateItem", new { idInvoice = ViewBag.Invoice, idDetail = item.Id }, new { @class = "btn btn-success" }) |
+            @Html.ActionLink("Delete", "DeleteItem", new { idInvoice = ViewBag.Invoice, idDetail = item.Id }, new { @class = "btn btn-danger" })
         </td>
  
     </tr>
@@ -51,6 +59,11 @@
 }
 
 </table>
+@if (ViewBag.Results == 0)
+{
+    <p style="padding-left: 120px;color: coral;">No results</p>
+}
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
