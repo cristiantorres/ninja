@@ -125,10 +125,13 @@ namespace ninja.Controllers
         public ActionResult Detail(long id)
         {
             Invoice invoice = _InvoiceContext.GetById(id);
+            ViewBag.Results = invoice.GetDetail().Count;
+            ViewBag.Invoice = id;
+
             return View(invoice.GetDetail());
         }
 
-
+        [HttpGet]
         public ActionResult DeleteItem(long? idInvoice, long? idDetail)
         {
             if (idDetail == null)
@@ -153,14 +156,34 @@ namespace ninja.Controllers
         [HttpPost]
         public ActionResult DeleteItem(InvoiceDetailViewModels invoiceDetailVM)
         {
-            _InvoiceContext.deleteDetail(invoiceDetailVM.InvoiceId, invoiceDetailVM.Id);
-            return View();
+            try
+            {
+                if (invoiceDetailVM == null)
+                    return View("Error");
+
+                _InvoiceContext.deleteDetail(invoiceDetailVM.InvoiceId, invoiceDetailVM.Id);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return View("Error");
+            }
         }
 
 
         [HttpGet]
-        public ActionResult AddItem()
+        public ActionResult AddItem(long id)
         {
+            Invoice invoice = _InvoiceContext.GetById(id);
+            InvoiceViewModels invVM = new InvoiceViewModels
+            {
+                Id = invoice.Id,
+                Type = invoice.Type
+            };
+            ViewBag.Invoice = invVM;
+
+
             return View();
         }
 
@@ -173,14 +196,14 @@ namespace ninja.Controllers
                 {
 
                     List<InvoiceDetail> items = new List<InvoiceDetail>();
-                    items.Add(new InvoiceDetail
+                    InvoiceDetail detail =  new InvoiceDetail
                     {
                         InvoiceId = invoiceDetailVM.InvoiceId,
                         Amount = invoiceDetailVM.Amount,
                         Description = invoiceDetailVM.Description,
                         UnitPrice = invoiceDetailVM.UnitPrice
-                    });
-                    _InvoiceContext.UpdateDetail(invoiceDetailVM.InvoiceId, items);
+                    };
+                    _InvoiceContext.AddDetail(invoiceDetailVM.Id, detail);
                     return RedirectToAction("Index");
 
                 }
@@ -194,6 +217,53 @@ namespace ninja.Controllers
   
         }
 
+        
+
+        // GET: Invoice/Edit/5
+        public ActionResult UpdateItem(int? id)
+        {
+            try
+            {
+                if (id == null)
+                    return View("Error");
+                Invoice invoiceToModity = _InvoiceContext.GetById((long)id);
+                InvoiceViewModels invoiceVM = new InvoiceViewModels();
+                invoiceVM.Id = invoiceToModity.Id;
+                invoiceVM.Type = invoiceToModity.Type;
+
+                return View(invoiceVM);
+            }
+            catch(Exception ex)
+            {
+                return View("Error");
+            }
+        }
+
+        // POST: Invoice/Edit/5
+        [HttpPost]
+        public ActionResult UpdateItem(InvoiceDetailViewModels invoice)
+        {
+            try
+            {
+                if (this.ModelState.IsValid)
+                {
+                    InvoiceDetail invoiceDetailToModify = new InvoiceDetail
+                    {
+                        InvoiceId = invoice.InvoiceId,
+                        Amount = invoice.Amount,
+                        Description = invoice.Description,
+                        UnitPrice = invoice.UnitPrice
+                    };
+                    _InvoiceContext.UpdateItem(invoiceDetailToModify);
+                }
+              return RedirectToAction("Index");
+                
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
         #endregion InvoiceDetails
     }
 }
