@@ -78,9 +78,9 @@ namespace ninja.Controllers
             try
             {
 
-                //Verificar la modificacion de una invoice
-                _InvoiceContext.Update(invoice.Id);
-               // _InvoiceContext.Insert(invoice);
+                Invoice invoiceToModify = new Invoice{Id=invoice.Id,Type=invoice.Type };
+                _InvoiceContext.Update(invoiceToModify);
+                
                 return RedirectToAction("Index");
             }
             catch
