@@ -84,21 +84,26 @@ namespace ninja.model.Manager {
         }
 
 
-        /*Bora un detail especifico*/
+        /*Borra un detail especifico*/
         public void deleteDetail(long idInvoice, long idDetail)
         {
             Invoice invoice = this.GetById(idInvoice);
            // List<InvoiceDetail> details = invoice.GetDetail().ToList();
 
             invoice.GetDetail().ToList().RemoveAll((x) => x.Id == idDetail);
-            //foreach (var item in details)
-            //{
-            //    if (item.Id==idDetail)
-            //    {
-            //        details.Remove(item);
-            //        break;
-            //    }
-            //}
+ 
+        }
+
+        public void UpdateItem(InvoiceDetail invoiceDetailToModify)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddDetail(long id, InvoiceDetail item)
+        {
+            Invoice invoiceToModify = this.GetById(id);
+            invoiceToModify.AddDetail(item);
+           
         }
     }
 
