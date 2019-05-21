@@ -12,7 +12,12 @@
  <hr />
 <table class="table">
     <tr>
- 
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceId)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
@@ -32,29 +37,34 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.InvoiceId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Amount)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UnitPrice)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TotalPrice)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TotalPriceWithTaxes)
+    </td>
+    <td>
+        @Html.ActionLink("Update", "UpdateItem", new { idinvoice = item.InvoiceId, iditem = item.Id }, new { @class = "btn btn-success" }) |
+        @Html.ActionLink("Delete", "DeleteItem", new { idinvoice = item.InvoiceId, iditem = item.Id }, new { @class = "btn btn-danger" })
+    </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalPriceWithTaxes)
-        </td>
-        <td>
-            @Html.ActionLink("Update", "UpdateItem", new { idinvoice = item.InvoiceId, iditem = item.Id }, new { @class = "btn btn-success" }) |
-            @Html.ActionLink("Delete", "DeleteItem", new {  idinvoice = item.InvoiceId, iditem = item.Id  }, new { @class = "btn btn-danger" })
-        </td>
- 
-    </tr>
+</tr>
      
 }
 
