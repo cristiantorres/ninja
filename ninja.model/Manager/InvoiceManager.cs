@@ -102,6 +102,7 @@ namespace ninja.model.Manager {
         public void AddDetail(long id, InvoiceDetail item)
         {
             Invoice invoiceToModify = this.GetById(id);
+            item.Id = invoiceToModify.GetDetail().Count+1;
             invoiceToModify.AddDetail(item);
            
         }
