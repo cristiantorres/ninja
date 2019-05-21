@@ -145,15 +145,15 @@ namespace ninja.Controllers
         }
 
         [HttpGet]
-        public ActionResult DeleteItem(long? idInvoice, long? idDetail)
+        public ActionResult DeleteItem(long? idinvoice, long? iditem)
         {
-            if (idInvoice == null || idDetail == null)
+            if (idinvoice == null || iditem == null)
                 return View("Error");
-            Invoice _invoice = _InvoiceContext.GetById((long)idInvoice);
+            Invoice _invoice = _InvoiceContext.GetById((long)idinvoice);
             InvoiceDetailViewModels invoiceDetailVM = new InvoiceDetailViewModels();
             foreach (var item in _invoice.GetDetail())
             {
-                if (item.Id == idDetail)
+                if (item.Id == iditem)
                 {
                     invoiceDetailVM.InvoiceId = item.InvoiceId;
                     invoiceDetailVM.Amount = item.Amount;
@@ -163,7 +163,7 @@ namespace ninja.Controllers
                     invoiceDetailVM.UnitPrice = item.UnitPrice;
                 }
             }
-            ViewBag.Invoice = idInvoice;
+            ViewBag.Invoice = idinvoice;
             return View(invoiceDetailVM);
         }
 
@@ -206,11 +206,11 @@ namespace ninja.Controllers
             {
                 if (this.ModelState.IsValid)
                 {
-
+                    string invoiceForDetail = Request.Form["invoice"]; 
                     List<InvoiceDetail> items = new List<InvoiceDetail>();
                     InvoiceDetail detail =  new InvoiceDetail
                     {
-                        InvoiceId = invoiceDetailVM.InvoiceId,
+                        InvoiceId = long.Parse(invoiceForDetail),
                         Amount = invoiceDetailVM.Amount,
                         Description = invoiceDetailVM.Description,
                         UnitPrice = invoiceDetailVM.UnitPrice
@@ -229,7 +229,7 @@ namespace ninja.Controllers
   
         }
 
-        public ActionResult UpdateItem(long? idinvoice, long idtem)
+        public ActionResult UpdateItem(long? idinvoice, long iditem)
         {
             try
             {
