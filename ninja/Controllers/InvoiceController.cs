@@ -166,6 +166,7 @@ namespace ninja.Controllers
                     invoiceDetailVM.UnitPrice = item.UnitPrice;
                 }
             }
+            ViewBag.Invoice = idInvoice;
             return View(invoiceDetailVM);
         }
 
@@ -236,18 +237,29 @@ namespace ninja.Controllers
         
 
         // GET: Invoice/Edit/5
-        public ActionResult UpdateItem(int? id)
+        public ActionResult UpdateItem(int? id, long idDetail)
         {
             try
             {
                 if (id == null)
                     return View("Error");
                 Invoice invoiceToModity = _InvoiceContext.GetById((long)id);
-                InvoiceViewModels invoiceVM = new InvoiceViewModels();
-                invoiceVM.Id = invoiceToModity.Id;
-                invoiceVM.Type = invoiceToModity.Type;
+                InvoiceDetailViewModels invoiceDetailVM = new InvoiceDetailViewModels();
+                foreach (var item in invoiceToModity.getDetail())
+                {
+                    if (item.Id == idDetail)
+                    {
+                        invoiceDetailVM.InvoiceId = item.InvoiceId;
+                        invoiceDetailVM.Amount = item.Amount;
+                        invoiceDetailVM.Description = item.Description;
+                        invoiceDetailVM.TotalPrice = item.TotalPrice;
+                        invoiceDetailVM.TotalPriceWithTaxes = item.TotalPriceWithTaxes;
+                        invoiceDetailVM.UnitPrice = item.UnitPrice;
+                        break;
+                    }
+                }
 
-                return View(invoiceVM);
+                return View(invoiceDetailVM);
             }
             catch(Exception ex)
             {
