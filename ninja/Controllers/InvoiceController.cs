@@ -125,16 +125,32 @@ namespace ninja.Controllers
         public ActionResult Detail(long id)
         {
             Invoice invoice = _InvoiceContext.GetById(id);
-            ViewBag.Results = invoice.GetDetail().Count;
-            ViewBag.Invoice = id;
+            
+           
 
-            return View(invoice.GetDetail());
+            List<InvoiceDetailViewModels> invoiceDetailVMList = new List<InvoiceDetailViewModels>();
+            foreach (var inv in invoice.GetDetail())
+            {
+                InvoiceDetailViewModels objVM = new InvoiceDetailViewModels();
+                objVM.Id = inv.Id;
+                objVM.InvoiceId = inv.InvoiceId;
+                objVM.Amount = inv.Amount;
+                objVM.Description = inv.Description;
+                objVM.TotalPrice = inv.TotalPrice;
+                objVM.TotalPriceWithTaxes = inv.TotalPriceWithTaxes;
+                objVM.UnitPrice = inv.UnitPrice;
+                invoiceDetailVMList.Add(objVM);
+
+            }
+            ViewBag.Results = invoiceDetailVMList.Count;
+            ViewBag.Invoice = id;
+            return View(invoiceDetailVMList);
         }
 
         [HttpGet]
         public ActionResult DeleteItem(long? idInvoice, long? idDetail)
         {
-            if (idDetail == null)
+            if (idInvoice == null || idDetail == null)
                 return View("Error");
             Invoice _invoice = _InvoiceContext.GetById((long)idInvoice);
             InvoiceDetailViewModels invoiceDetailVM = new InvoiceDetailViewModels();
