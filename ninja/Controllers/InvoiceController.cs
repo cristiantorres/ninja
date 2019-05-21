@@ -80,7 +80,6 @@ namespace ninja.Controllers
 
                 Invoice invoiceToModify = new Invoice { Id = invoice.Id, Type = invoice.Type };
                 _InvoiceContext.Update(invoiceToModify);
-
                 return RedirectToAction("Index");
             }
             catch
@@ -102,7 +101,7 @@ namespace ninja.Controllers
             return View(invoiceVM);
         }
 
-        // POST: Invoice/Delete/5
+  
         [HttpPost]
         public ActionResult Delete(InvoiceViewModels invoice)
         {
@@ -125,9 +124,7 @@ namespace ninja.Controllers
         public ActionResult Detail(long id)
         {
             Invoice invoice = _InvoiceContext.GetById(id);
-            
-           
-
+ 
             List<InvoiceDetailViewModels> invoiceDetailVMList = new List<InvoiceDetailViewModels>();
             foreach (var inv in invoice.GetDetail())
             {
@@ -199,8 +196,6 @@ namespace ninja.Controllers
                 Type = invoice.Type
             };
             ViewBag.Invoice = invVM;
-
-
             return View();
         }
 
@@ -234,20 +229,17 @@ namespace ninja.Controllers
   
         }
 
-        
-
-        // GET: Invoice/Edit/5
-        public ActionResult UpdateItem(int? id, long idDetail)
+        public ActionResult UpdateItem(long? idinvoice, long idtem)
         {
             try
             {
-                if (id == null)
+                if (idinvoice == null)
                     return View("Error");
-                Invoice invoiceToModity = _InvoiceContext.GetById((long)id);
+                Invoice invoiceToModity = _InvoiceContext.GetById((long)idinvoice);
                 InvoiceDetailViewModels invoiceDetailVM = new InvoiceDetailViewModels();
-                foreach (var item in invoiceToModity.getDetail())
+                foreach (var item in invoiceToModity.GetDetail())
                 {
-                    if (item.Id == idDetail)
+                    if (item.Id == iditem)
                     {
                         invoiceDetailVM.InvoiceId = item.InvoiceId;
                         invoiceDetailVM.Amount = item.Amount;
@@ -267,7 +259,7 @@ namespace ninja.Controllers
             }
         }
 
-        // POST: Invoice/Edit/5
+ 
         [HttpPost]
         public ActionResult UpdateItem(InvoiceDetailViewModels invoice)
         {
