@@ -50,8 +50,8 @@
             @Html.DisplayFor(modelItem => item.TotalPriceWithTaxes)
         </td>
         <td>
-            @Html.ActionLink("Update", "UpdateItem", new { idInvoice = ViewBag.Invoice, idDetail = item.Id }, new { @class = "btn btn-success" }) |
-            @Html.ActionLink("Delete", "DeleteItem", new { idInvoice = ViewBag.Invoice, idDetail = item.Id }, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Update", "UpdateItem", new { idinvoice = item.InvoiceId, iditem = item.Id }, new { @class = "btn btn-success" }) |
+            @Html.ActionLink("Delete", "DeleteItem", new {  idinvoice = item.InvoiceId, iditem = item.Id  }, new { @class = "btn btn-danger" })
         </td>
  
     </tr>
