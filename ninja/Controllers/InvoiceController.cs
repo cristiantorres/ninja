@@ -248,6 +248,7 @@ namespace ninja.Controllers
                 {
                     if (item.Id == iditem)
                     {
+                        invoiceDetailVM.Id = item.Id;
                         invoiceDetailVM.InvoiceId = item.InvoiceId;
                         invoiceDetailVM.Amount = item.Amount;
                         invoiceDetailVM.Description = item.Description;
