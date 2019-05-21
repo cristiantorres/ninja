@@ -149,22 +149,29 @@ namespace ninja.Controllers
         {
             if (idinvoice == null || iditem == null)
                 return View("Error");
-            Invoice _invoice = _InvoiceContext.GetById((long)idinvoice);
-            InvoiceDetailViewModels invoiceDetailVM = new InvoiceDetailViewModels();
-            foreach (var item in _invoice.GetDetail())
+            try
             {
-                if (item.Id == iditem)
+                Invoice _invoice = _InvoiceContext.GetById((long)idinvoice);
+                InvoiceDetailViewModels invoiceDetailVM = new InvoiceDetailViewModels();
+                foreach (var item in _invoice.GetDetail())
                 {
-                    invoiceDetailVM.InvoiceId = item.InvoiceId;
-                    invoiceDetailVM.Amount = item.Amount;
-                    invoiceDetailVM.Description = item.Description;
-                    invoiceDetailVM.TotalPrice = item.TotalPrice;
-                    invoiceDetailVM.TotalPriceWithTaxes = item.TotalPriceWithTaxes;
-                    invoiceDetailVM.UnitPrice = item.UnitPrice;
+                    if (item.Id == iditem)
+                    {
+                        invoiceDetailVM.InvoiceId = item.InvoiceId;
+                        invoiceDetailVM.Amount = item.Amount;
+                        invoiceDetailVM.Description = item.Description;
+                        invoiceDetailVM.TotalPrice = item.TotalPrice;
+                        invoiceDetailVM.TotalPriceWithTaxes = item.TotalPriceWithTaxes;
+                        invoiceDetailVM.UnitPrice = item.UnitPrice;
+                    }
                 }
+                ViewBag.Invoice = idinvoice;
+                return View(invoiceDetailVM);
             }
-            ViewBag.Invoice = idinvoice;
-            return View(invoiceDetailVM);
+            catch(Exception ex)
+            {
+                return View("Error");
+            }
         }
 
         [HttpPost]
