@@ -88,15 +88,15 @@ namespace ninja.model.Manager {
         public void deleteDetail(long idInvoice, long idDetail)
         {
             Invoice invoice = this.GetById(idInvoice);
-           // List<InvoiceDetail> details = invoice.GetDetail().ToList();
-
             invoice.GetDetail().ToList().RemoveAll((x) => x.Id == idDetail);
  
         }
 
         public void UpdateItem(InvoiceDetail invoiceDetailToModify)
         {
-            throw new NotImplementedException();
+
+            this._mock.updateItem(invoiceDetailToModify);
+ 
         }
 
         public void AddDetail(long id, InvoiceDetail item)
