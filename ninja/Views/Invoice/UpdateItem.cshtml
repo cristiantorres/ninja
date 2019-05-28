@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "UpdateItem";
-
+    
 }
 
 <h2>Update Detail</h2>
@@ -13,8 +13,10 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Invoice Detail</h4>
+        <div class="alert alert-info" role="alert">Invoice Detail 
+           </div>  
         <hr />
+        
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
@@ -81,7 +83,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Detail", "Detail", new { id = @ViewBag.Invoice })
 </div>
 
 @section Scripts {

@@ -2,39 +2,58 @@
 
 @{
     ViewBag.Title = "Index";
+     
 }
-
+ 
 <h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "New",null, new { @class = "btn btn-info" })
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th></th>
-    </tr>
+    <thead class="thead-dark">
+        <tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
 
-        <td>
-            @Html.ActionLink("Update", "Update", new { id = item.Id }, new { @class = "btn btn-success" })       
-            @Html.ActionLink("Details", "Detail", new { id=item.Id }, new { @class = "btn btn-warning" }) 
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn btn-danger" })
-        </td>
-    </tr>
-}
+                    <td>
+                        @Html.ActionLink("Update", "Update", new { id = item.Id }, new { @class = "btn btn-success", data_toggle = "tooltip", data_placement = "top", title = "Update" })
+                        @*@if (item.CountItems >= 0) { TitleDetails = item.CountItems.ToString(); }
+                            else{ TitleDetails = "No"; }*@
+                        @Html.ActionLink("Details", "Detail", new { id = item.Id }, new { @id = item.Id, @class = "btn btn-warning", data_toggle = "tooltip", data_placement = "top", title = (item.CountItems + " Items") })
+
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" , data_toggle = "tooltip", data_placement = "top", title = "Delete" })
+                    </td>
+                </tr>
+                 
+            </tbody>
+                }
 
 </table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        console.log("ready!");
+    });
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>

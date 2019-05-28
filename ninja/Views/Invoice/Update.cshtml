@@ -19,19 +19,22 @@
     @Html.HiddenFor(model => model.Id)
      
     <div class="form-group">
-        Invoice -   @Html.DisplayFor(model => model.Id)
-        <br />
-        @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-6">
-            @Html.DropDownListFor(model => model.Type, new List<SelectListItem>
+        <div class="alert alert-info" role="alert">
+            Invoice -   @Html.DisplayFor(model => model.Id)
+        </div>
+
+            <br />
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.Type, new List<SelectListItem>
             {
               new SelectListItem{ Text = "A", Value = "A" },
               new SelectListItem{ Text = "B", Value = "B" } ,
               new SelectListItem{ Text = "C", Value = "C" }
             }, new { htmlAttributes = new { @class = " customselect" } })
-            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
