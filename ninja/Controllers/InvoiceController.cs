@@ -23,7 +23,9 @@ namespace ninja.Controllers
                 InvoiceViewModels objVM = new InvoiceViewModels();
                 objVM.Id = inv.Id;
                 objVM.Type = inv.Type;
+                objVM.CountItems = inv.GetDetail().Count<InvoiceDetail>();
                 invoiceVMList.Add(objVM);
+                
 
             }
             return View(invoiceVMList);
@@ -114,7 +116,7 @@ namespace ninja.Controllers
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
 
@@ -165,7 +167,7 @@ namespace ninja.Controllers
                         invoiceDetailVM.UnitPrice = item.UnitPrice;
                     }
                 }
-                ViewBag.Invoice = idinvoice;
+                ViewBag.Invoice = _invoice.Id;
                 return View(invoiceDetailVM);
             }
             catch(Exception ex)
@@ -277,6 +279,7 @@ namespace ninja.Controllers
                 {
                     InvoiceDetail invoiceDetailToModify = new InvoiceDetail
                     {
+                        Id = invoice.Id,
                         InvoiceId = invoice.InvoiceId,
                         Amount = invoice.Amount,
                         Description = invoice.Description,
@@ -287,9 +290,9 @@ namespace ninja.Controllers
               return RedirectToAction("Index");
                 
             }
-            catch
+            catch(Exception ex)
             {
-                return View("Error");
+                return View("Error",ex.Message);
             }
         }
         #endregion InvoiceDetails
