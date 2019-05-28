@@ -84,6 +84,16 @@ namespace ninja.model.Mock {
  
         }
 
+        public void updateItem(InvoiceDetail invoiceDetailToModify)
+        {
+            Invoice invoice = this.GetById(invoiceDetailToModify.InvoiceId);
+            InvoiceDetail detailToModify = invoice.GetDetail().FirstOrDefault(detail => detail.Id == invoiceDetailToModify.Id);
+            detailToModify.InvoiceId = invoiceDetailToModify.InvoiceId;
+            detailToModify.UnitPrice = invoiceDetailToModify.UnitPrice;
+            detailToModify.Amount = invoiceDetailToModify.Amount;
+             
+        }
+
         public void Delete(Invoice invoice) {
 
             this._db.Remove(invoice);
