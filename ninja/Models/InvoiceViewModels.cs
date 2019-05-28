@@ -14,5 +14,6 @@ namespace ninja.Models
 
         [Required,CustomTypeValidator]
         public string Type { get; set; }
+        public int CountItems { get;  set; }
     }
 }
