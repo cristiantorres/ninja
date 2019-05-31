@@ -22,9 +22,11 @@ namespace ninja.Models
         public string Description { get; set; }
 
         [Required]
+        [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Invalid Amount")]
         public double Amount { get; set; }
 
         [Required]
+        [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Invalid unit price")]
         [System.ComponentModel.DisplayName("Unit Price")]
         public double UnitPrice { get; set; }
 
