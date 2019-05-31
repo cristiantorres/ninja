@@ -1430,12 +1430,13 @@ th {
         line-height: 1.428571429;
         vertical-align: top;
         border-top: 1px solid #96bdc2;
-        background-color: #c7cdd3
+        background-color: #c0dce0
     }
 
 .table thead > tr > th {
   vertical-align: bottom;
   border-bottom: 2px solid #dddddd;
+ 
 }
 
 .table caption + thead tr:first-child th,
