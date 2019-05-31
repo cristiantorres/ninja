@@ -13,6 +13,7 @@
             @Html.DisplayNameFor(model => model.InvoiceId) -      @ViewBag.Invoice
         </div>
     <hr />
+<div class="container">
     <table class="table">
         <tr>
             <th>
@@ -77,8 +78,16 @@
     {
         <p style="padding-left: 120px;color: coral;">No results</p>
     }
+   </div>
 
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
 
+<script type="text/javascript">
+ 
+    $(".btn-danger").append($("<span style='padding-left:2px' class='glyphicon glyphicon-trash'></span>"));
+    $(".btn-success").append($("<span style='padding-left:2px' class='glyphicon glyphicon-pencil'></span>"));
+    $(".btn-warning").append($("<span style='padding-left:2px' class='glyphicon glyphicon-list-alt'></span>"));
+    $(".btn-info").append($("<span style='padding-left:2px' class='glyphicon glyphicon-plus'></span>"));
+</script>

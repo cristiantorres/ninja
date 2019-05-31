@@ -76,6 +76,8 @@
 
             @Html.AntiForgeryToken()
             @Html.Hidden("invoice", (object)ViewBag.Invoice)
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.InvoiceId)
             <div class="form-actions no-color">
                 <input type="submit" value="Delete" class="btn btn-info" /> |
                 @Html.ActionLink("Back to Detail", "Detail", new { id = @ViewBag.Invoice })

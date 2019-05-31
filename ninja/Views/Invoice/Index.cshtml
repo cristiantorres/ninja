@@ -10,19 +10,20 @@
 <p>
     @Html.ActionLink("Create New", "New",null, new { @class = "btn btn-info" })
 </p>
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
         @foreach (var item in Model)
         {
             <tbody>
@@ -36,18 +37,19 @@
 
                     <td>
                         @Html.ActionLink("Update", "Update", new { id = item.Id }, new { @class = "btn btn-success", data_toggle = "tooltip", data_placement = "top", title = "Update" })
-                        @*@if (item.CountItems >= 0) { TitleDetails = item.CountItems.ToString(); }
-                            else{ TitleDetails = "No"; }*@
+
                         @Html.ActionLink("Details", "Detail", new { id = item.Id }, new { @id = item.Id, @class = "btn btn-warning", data_toggle = "tooltip", data_placement = "top", title = (item.CountItems + " Items") })
 
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" , data_toggle = "tooltip", data_placement = "top", title = "Delete" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", data_toggle = "tooltip", data_placement = "top", title = "Delete" })
+
                     </td>
                 </tr>
-                 
-            </tbody>
-                }
 
-</table>
+            </tbody>
+        }
+
+    </table>
+</div>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -56,4 +58,8 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+    $(".btn-danger").append($("<span style='padding-left:2px' class='glyphicon glyphicon-trash'></span>"));
+    $(".btn-success").append($("<span style='padding-left:2px' class='glyphicon glyphicon-pencil'></span>"));
+    $(".btn-warning").append($("<span style='padding-left:2px' class='glyphicon glyphicon-list-alt'></span>"));
+    $(".btn-info").append($("<span style='padding-left:2px' class='glyphicon glyphicon-plus'></span>"));
 </script>
