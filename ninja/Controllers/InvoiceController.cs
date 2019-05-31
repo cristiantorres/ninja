@@ -159,6 +159,7 @@ namespace ninja.Controllers
                 {
                     if (item.Id == iditem)
                     {
+                        invoiceDetailVM.Id = item.Id;
                         invoiceDetailVM.InvoiceId = item.InvoiceId;
                         invoiceDetailVM.Amount = item.Amount;
                         invoiceDetailVM.Description = item.Description;
@@ -185,7 +186,8 @@ namespace ninja.Controllers
                     return View("Error");
 
                 _InvoiceContext.deleteDetail(invoiceDetailVM.InvoiceId, invoiceDetailVM.Id);
-                return View();
+                return RedirectToAction("Detail",new { id = invoiceDetailVM.InvoiceId });
+                 
             }
             catch (Exception ex)
             {
@@ -204,7 +206,7 @@ namespace ninja.Controllers
                 Id = invoice.Id,
                 Type = invoice.Type
             };
-            ViewBag.Invoice = invVM;
+            ViewBag.Invoice = id;
             return View();
         }
 
@@ -219,13 +221,14 @@ namespace ninja.Controllers
                     List<InvoiceDetail> items = new List<InvoiceDetail>();
                     InvoiceDetail detail =  new InvoiceDetail
                     {
-                        InvoiceId = long.Parse(invoiceForDetail),
+                        InvoiceId = invoiceDetailVM.InvoiceId,
                         Amount = invoiceDetailVM.Amount,
                         Description = invoiceDetailVM.Description,
                         UnitPrice = invoiceDetailVM.UnitPrice
                     };
                     _InvoiceContext.AddDetail(invoiceDetailVM.Id, detail);
-                    return RedirectToAction("Index");
+                    ViewBag.Invoice = detail.InvoiceId;
+                    return RedirectToAction("Detail", new { id = invoiceDetailVM.InvoiceId });
 
                 }
                 return View(invoiceDetailVM);
@@ -271,7 +274,7 @@ namespace ninja.Controllers
 
  
         [HttpPost]
-        public ActionResult UpdateItem(InvoiceDetailViewModels invoice)
+        public ActionResult UpdateItem(InvoiceDetailViewModels invoiceDetailVM)
         {
             try
             {
@@ -279,16 +282,16 @@ namespace ninja.Controllers
                 {
                     InvoiceDetail invoiceDetailToModify = new InvoiceDetail
                     {
-                        Id = invoice.Id,
-                        InvoiceId = invoice.InvoiceId,
-                        Amount = invoice.Amount,
-                        Description = invoice.Description,
-                        UnitPrice = invoice.UnitPrice
+                        Id = invoiceDetailVM.Id,
+                        InvoiceId = invoiceDetailVM.InvoiceId,
+                        Amount = invoiceDetailVM.Amount,
+                        Description = invoiceDetailVM.Description,
+                        UnitPrice = invoiceDetailVM.UnitPrice
                     };
                     _InvoiceContext.UpdateItem(invoiceDetailToModify);
                 }
-              return RedirectToAction("Index");
-                
+                return RedirectToAction("Detail", new { id = invoiceDetailVM.InvoiceId });
+
             }
             catch(Exception ex)
             {
